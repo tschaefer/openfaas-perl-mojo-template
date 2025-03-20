@@ -1,0 +1,31 @@
+FROM ghcr.io/openfaas/of-watchdog:0.10.8 as watchdog
+
+FROM perl:5.40.1-slim
+
+COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
+RUN chmod +x /usr/bin/fwatchdog
+
+ARG ADDITIONAL_CPAN_PACKAGES
+RUN cpanm -n Mojolicious ${ADDITIONAL_CPAN_PACKAGES} \
+    && mkdir -p /home/app
+
+WORKDIR /home/app
+
+COPY index.pl .
+COPY function function
+
+RUN addgroup --system app \
+    && adduser --system --ingroup app app \
+    && chown -R app:app /home/app
+
+USER app
+
+ENV fprocess="perl index.pl daemon -l http://127.0.0.1:5000"
+EXPOSE 8080
+
+HEALTHCHECK --interval=2s CMD [ -e /tmp/.lock ] || exit 1
+
+ENV upstream_url="http://127.0.0.1:5000"
+ENV mode="http"
+
+CMD ["fwatchdog"]

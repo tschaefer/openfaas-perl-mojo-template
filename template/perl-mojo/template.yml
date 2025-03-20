@@ -1,0 +1,5 @@
+---
+language: perl
+fprocess: perl index.pl daemon -m production -l http://127.0.0.1:5000
+welcome_message: |
+  You have created a new function which uses the OpenFaaS perl-mojo template.
