@@ -18,7 +18,7 @@ To install further CPAN modules set the build argument in the `stack.yml` file.
 ```diff
 functions:
   mojo:
-    lang: perl-http
+    lang: perl-mojo
     handler: ./mojo
 +    build_args:
 +      ADDITIONAL_CPAN_PACKAGES: "Readonly URI"
