@@ -5,6 +5,11 @@ FROM perl:5.40.1-slim
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
 
+ARG ADDITIONAL_PACKAGES
+RUN apt update \
+    && apt install --no-install-recommends --yes ${ADDITIONAL_PACKAGES} \
+    && apt-get clean && rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
 ARG ADDITIONAL_CPAN_PACKAGES
 RUN cpanm -n Mojolicious ${ADDITIONAL_CPAN_PACKAGES} \
     && mkdir -p /home/app

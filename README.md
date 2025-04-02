@@ -13,7 +13,8 @@ faas-cli new --lang perl-mojo mojo
 faas-cli up -f stack.yml
 ```
 
-To install further CPAN modules set the build argument in the `stack.yml` file.
+To install further OS packages or CPAN modules set the build argument in the
+`stack.yml` file.
 
 ```diff
 functions:
@@ -21,6 +22,7 @@ functions:
     lang: perl-mojo
     handler: ./mojo
 +    build_args:
++      ADDITIONAL_PACKAGES: "built-essential libssl-dev"
 +      ADDITIONAL_CPAN_PACKAGES: "Readonly URI"
 ```
 
