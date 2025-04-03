@@ -1,16 +1,8 @@
 package Handler;
 
-use strict;
-use warnings;
+use Mojo::Base -base;
 
-use utf8;
-
-sub new {
-    my $class = shift;
-    my $self = {};
-
-    return bless $self, $class;
-}
+has 'log';
 
 ##
 # This is the function that will be called on any request, receiving the
@@ -24,7 +16,7 @@ sub new {
 # rendered and the HTTP status code. Optionally, it returns a hash reference
 # of custom HTTP headers.
 sub run {
-    my ($self, $body, $headers, $params) = @_;
+    my ($self, $request) = @_;
 
     return { text => "Perl 🐪 Mojolicious 🚀 and OpenFaaS 🐳", status => 200 };
 }
