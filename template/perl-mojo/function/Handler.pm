@@ -1,19 +1,11 @@
 package Handler;
 
-use strict;
-use warnings;
+use Mojo::Base -base;
 
-use utf8;
-
-sub new {
-    my $class = shift;
-    my $self = {};
-
-    return bless $self, $class;
-}
+has 'log';
 
 sub run {
-    my ($self, $body, $headers, $params) = @_;
+    my ($self, $request) = @_;
 
     return { text => "Perl 🐪 Mojolicious 🚀 and OpenFaaS 🐳", status => 200 };
 }
