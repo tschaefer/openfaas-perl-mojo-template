@@ -13,8 +13,7 @@ sub new {
 }
 
 sub run {
-    my $self = shift;
-    my ($body, $headers) = @_;
+    my ($self, $body, $headers, $params) = @_;
 
     return { text => "Perl 🐪 Mojolicious 🚀 and OpenFaaS 🐳", status => 200 };
 }

@@ -4,15 +4,12 @@ use FindBin;
 use lib "$FindBin::Bin/function";
 
 use Mojolicious::Lite -signatures;
-use Mojo::Log;
 
 use Handler;
 
-app->log(Mojo::Log->new);
-
 any '/' => sub ($c) {
     my $handler = Handler->new;
-    my ($response, $headers) = $handler->run($c->req->body, $c->req->headers);
+    my ($response, $headers) = $handler->run($c->req->body, $c->req->headers->to_hash, $c->req->params->to_hash);
 
     $c->res->headers->add(%$headers) if $headers;
 
