@@ -39,25 +39,24 @@ verify_and_clean() {
     fi
 }
 
-if ! [ -x "$(command -v faas-cli)" ]; then
-    HERE=$(pwd)
-    cd /tmp/
-    curl -sSL https://cli.openfaas.com | sh
-    CLI="/tmp/faas-cli"
+tmpdir=$(mktemp -d -t openfaas-XXXXXX)
+trap 'rm -rf $tmpdir' EXIT
+cp -r ./template $tmpdir
 
-    cd $HERE
+if ! [ -x "$(command -v faas-cli)" ]; then
+    mkdir -p $tmpdir/bin
+    cd $tmpdir/bin
+
+    curl -sSL https://cli.openfaas.com | sh
+    CLI="$tmpdir/bin/faas-cli"
 fi
 
 cli_version=$($CLI version --short-version)
 
 echo Validating templates with faas-cli $cli_version
 
-tmpdir=$(mktemp -d -t openfaas-XXXXXX)
-trap 'rm -rf $tmpdir' EXIT
-cp -r ./template $tmpdir
-cd $tmpdir/template
-
 # verify each of the templates
+cd $tmpdir/template
 for dir in ./*/; do
     dirname=${dir%*/}
     template=${dirname##*/}
