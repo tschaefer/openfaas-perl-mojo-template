@@ -19,8 +19,8 @@ WORKDIR /home/app
 COPY index.pl .
 COPY function function
 
-RUN addgroup --system app \
-    && adduser --system --ingroup app app \
+RUN groupadd --system app \
+    && useradd --system --gid app app \
     && chown -R app:app /home/app
 
 USER app
