@@ -1,6 +1,6 @@
 FROM ghcr.io/openfaas/of-watchdog:0.10.11 AS watchdog
 
-FROM perl:5.42.0-slim
+FROM perl:5.43.2-slim
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
@@ -19,8 +19,8 @@ WORKDIR /home/app
 COPY index.pl .
 COPY function function
 
-RUN addgroup --system app \
-    && adduser --system --ingroup app app \
+RUN groupadd --system app \
+    && useradd --system --gid app app \
     && chown -R app:app /home/app
 
 USER app
