@@ -1,4 +1,4 @@
-FROM ghcr.io/openfaas/of-watchdog:0.11.0 AS watchdog
+FROM ghcr.io/openfaas/of-watchdog:0.11.1 AS watchdog
 
 FROM perl:5.43.4-slim
 
