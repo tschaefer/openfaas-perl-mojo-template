@@ -1,6 +1,6 @@
 FROM ghcr.io/openfaas/of-watchdog:0.11.3 AS watchdog
 
-FROM perl:5.43.7-slim
+FROM perl:5.43.8-slim
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
 RUN chmod +x /usr/bin/fwatchdog
